@@ -23,15 +23,16 @@ const Chat = () => {
     try {
       const res = await axios.post("/api/chatgpt", { prompt }, { timeout: 15000 });
       setAnswer(res.data.text);
-    } catch (e: any) {
-      if (e.code === "ECONNABORTED") {
+    } catch (e: unknown) {
+      const error = e as { code?: string }; // eを一時的にキャスト
+      if (error.code === "ECONNABORTED") {
         setError("タイムアウト: 15秒以内に回答が返ってきませんでした。");
       } else {
         setError("エラーが発生しました。");
       }
     } finally {
       setIsLoading(false);
-    }
+    }    
   };
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
