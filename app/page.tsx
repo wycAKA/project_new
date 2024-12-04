@@ -43,8 +43,10 @@ const Chat = () => {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: "image/*", // 画像ファイルのみを受け入れる
-    multiple: true, // 複数のファイルをアップロード可能にする
+    accept: {
+      'image/*': [], // 画像ファイルのみを許可
+    },
+    multiple: true, // 複数ファイルを許可
   });
 
   return (
